@@ -1,7 +1,7 @@
 /*	Author: Bhagpreet Brar bbrar 002
  *  Partner(s) Name: 
  *	Lab Section:
- *	Assignment: Lab # 2 Exercise # 2
+ *	Assignment: Lab # 2 Exercise # 3
  *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
@@ -12,8 +12,7 @@
 #include "simAVRHeader.h"
 #endif
 
-int main(void)
-{
+int main(void) {
 	DDRA = 0x00; PORTA = 0xFF;
 	DDRC = 0xFF; PORTC = 0x00;
 	
@@ -23,15 +22,18 @@ int main(void)
 	unsigned char spot3 = 0x00;
 	unsigned char spot4 = 0x00;
 	
-    while(1)
-    {
+    while(1) {
 		spot1 = PINA & 0x01;
 		spot2 = (PINA & 0x02) >> 1;
 		spot3 = (PINA & 0x04) >> 2;
 		spot4 = (PINA & 0x08) >> 3;
 		
 		cntavail = spot1 + spot2 + spot3 + spot4; // counts the spots that are occupied	
-		cntavail = 0x04 - cntavail; // subtract to get number of spots available	
-		PORTC = cntavail;
+		if (cntavail == 0x04){
+			PORTC = 0x80;
+		} else {
+			cntavail = 0x04 - cntavail; // subtract to get number of spots available	
+			PORTC = cntavail;
+		}
     }
 }
